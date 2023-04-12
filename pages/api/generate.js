@@ -15,11 +15,11 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const idea = req.body.idea || '';
+  if (idea.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a valid story idea",
       }
     });
     return;
@@ -28,8 +28,9 @@ export default async function (req, res) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
+      prompt: generatePrompt(idea),
       temperature: 0.6,
+      max_tokens: 500,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch(error) {
@@ -48,15 +49,18 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
+function generatePrompt(idea) {
+  const capitalizedStoryIdea =
+    // idea[0].toUpperCase() + idea.slice(1).toLowerCase();
+  idea[0].toUpperCase();
+  return `Return three story ideas, to go along with their writing prompt.  Then read https://www.linkedin.com/in/laurajeanthorne/ and tie in how Laura's unique experience can help them with this project.  Also give them a unique call to action.
 
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+  idea: Book about Sailing
+  Response: - Salty Seas, - The Fantastic Voyage, - The Dangerous Journey.  As an intrepid trevelor, Laura can bring your fantastic dreams to life!  Send her a carrier pigeon now!
+
+  idea: A book about children and adventure
+  Response: - The Wonder of the Now, - When we Were Young, - There and back.  As a creator at heart, Laura can see your story with fresh eyes of wonder!  Reach her over morse code now!
+
+  idea: ${capitalizedStoryIdea}
+  Response:`;
 }
