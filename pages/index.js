@@ -14,7 +14,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ dea: storyInput }),
+        body: JSON.stringify({ idea: storyInput }),
       });
 
       const data = await response.json();
