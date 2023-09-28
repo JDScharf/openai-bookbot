@@ -19,7 +19,7 @@ export default async function (req, res) {
   if (idea.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid story idea",
+        message: "Please enter a valid date idea",
       }
     });
     return;
@@ -50,17 +50,48 @@ export default async function (req, res) {
 }
 
 function generatePrompt(idea) {
-  const capitalizedStoryIdea =
+  const capitalizedDateIdea =
     // idea[0].toUpperCase() + idea.slice(1).toLowerCase();
   idea[0].toUpperCase();
-  return `Return three story ideas, to go along with their writing prompt.  Then read https://www.linkedin.com/in/laurajeanthorne/ and tie in how Laura's unique experience can help them with this project.  Also give them a unique call to action.
+  return `I want you to act as a date idea generator API for acticities in Syracuse, NY.  I will pass in three parameters:  energyLevel, distanceToTravel, and moneyCost.  
 
-  idea: Book about Sailing
-  Response: - Salty Seas, - The Fantastic Voyage, - The Dangerous Journey.  As an intrepid trevelor, Laura can bring your fantastic dreams to life!  Send her a carrier pigeon now!
+energyLevel refers to the amount of energy the activities chosen for the date will take.  Listening to a orchestra would be a low level activity, rock climbing at a gym would be a high level activity.  
 
-  idea: A book about children and adventure
-  Response: - The Wonder of the Now, - When we Were Young, - There and back.  As a creator at heart, Laura can see your story with fresh eyes of wonder!  Reach her over morse code now!
+distanceToTravel is the maximum length of distance (in miles) that the participant wishes to travel for the activities.
 
-  idea: ${capitalizedStoryIdea}
+moneyCost is whether this will be a low cost activity (such as coffee and a walk at a park) or a higher cost (such as going to a Syracuse University basketball game and then going out to a nice dinner).
+
+firstLat is the latitude for the address for the firstAddress.
+firstLong is the longitude for the firstAddress.
+
+secondLat and secondLong are also both latitude and longitude for the secondAddress.  thirdLat and thirdLong are also latitude and longitude for the second address.  Use the Google Geocode address API to get the latitude and longitude for the addresses.  I would also like the resulting ideas returned in JSON format.
+
+Here is a sample:
+
+user: {energyLevel = "high", distanceToTravel = 5, moneyCost="medium"}
+ideas: {firstStop = "CentralRock indoor climbing", firstAddress="600 N Franklin St, Syracuse, NY 13204", firstLong=-76.1586422026446, firstLat=43.05757533079649, secondStop="Freedom of Expresso Coffee", secondAddress= "115 Solar St Suite 101, Syracuse, NY 13204", secondLong=-76.15847630343886, secondLat=43.05666567606996, thirdStop="Franklin Square Park", thirdAddress="Solar & Plum Streets, Syracuse, NY", thirdLong=-76.15753200343886, thirdLat=43.05676327578289}
+
+user {energyLevel = "medium", distanceToTravel = 2, moneyCost="high"}
+ideas:
+Here are some date ideas for your parameters:
+
+user: {energyLevel = "high", distanceToTravel = 5, moneyCost="medium"}
+ideas:
+{
+"firstStop": "CentralRock indoor climbing",
+"firstAddress": "600 N Franklin St, Syracuse, NY 13204",
+"firstLong": -76.1586422026446,
+"firstLat": 43.05757533079649,
+"secondStop": "Freedom of Espresso Coffee",
+"secondAddress": "115 Solar St Suite 101, Syracuse, NY 13204",
+"secondLong": -76.15847630343886,
+"secondLat": 43.05666567606996,
+"thirdStop": "Franklin Square Park",
+"thirdAddress": "Solar & Plum Streets, Syracuse, NY",
+"thirdLong": -76.15753200343886,
+"thirdLat": 43.05676327578289
+}
+
+  idea: ${capitalizedDateIdea}
   Response:`;
 }

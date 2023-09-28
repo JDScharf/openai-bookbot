@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!-- This part of the code is not working in this project yet -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- <script type="module" src="https://js.arcgis.com/calcite-components/1.2.0/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.2.0/calcite.css" /> -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script>
+      require(["esri/config", "esri/Map", "esri/WebMap", "esri/layers/FeatureLayer", "esri/views/MapView", "esri/Graphic", "esri/layers/GraphicsLayer", "esri/rest/route", "esri/rest/support/RouteParameters", "esri/rest/support/FeatureSet", "esri/widgets/Legend"], function(esriConfig, Map, WebMap, FeatureLayer, MapView, Graphic, GraphicsLayer, route, RouteParameters, FeatureSet, Legend) {
+
+        esriConfig.apiKey = "AAPK3850a9ec91324a028768557dfc40d4ffvcIaUta3f0VFXfQzaX-fRYTub_0wRicii4v_tCY7CXnPSWbfsb44_DLmQKj3rJHv";
+
+//        Example from Arcgis site: https://developers.arcgis.com/javascript/latest/display-a-map/#reference-the-api
+        const map = new Map({
+        basemap: "arcgis-navigation" // Basemap layer service   
+});
+
+        const view = new MapView({
+                  map: map,
+                  center: [-76.154480, 43.088947], // Longitude, latitude
+                  zoom: 13, // Zoom level
+                  container: "viewDiv" // Div element
+                });
+
+//        Adding three points of interest
+
+        const bikelayer = new FeatureLayer({
+          url: "https://services6.arcgis.com/bdPqSfflsdgFRVVM/arcgis/rest/services/BikeSuitability_v2/FeatureServer"
+        })
+        map.add(bikelayer);
+        const graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
+
+        const firstPoint = { //Create a point
+        type: "point",
+        longitude: -76.1586422026446, 
+        latitude: 43.05757533079649
+    };
+
+    const secondPoint = { //Create a point
+        type: "point",
+        longitude: -76.15847630343886, 
+        latitude: 43.05666567606996
+    };
+
+    const thirdPoint = { //Create a point
+        type: "point",
+        longitude: -76.15753200343886, 
+        latitude: 43.05676327578289
+    };
+
+ const popupTemplate = {
+    title: "{Name}",
+    content: "{Description}"
+ }
+
+//  const haikuTemplate = {
+//     title: "{Name}",
+//     content: "{Description}"
+//  }
+
+ const haiku = "Your name is like ice unto my heart."
+
+ const firstAttributes = {
+    Name: "1st - Central Rock Gym",
+    Description: "This is a great way to get your blood pumping and challenge yourself physically."
+ }
+ const secondAttributes = {
+    Name: "2nd - Freedom of Espresso Coffee",
+    Description: "This is a great place to relax and get some coffee and conversation."
+ }
+
+ const thirdAttributes = {
+    Name: "3rd - Franklin Square Park",
+    Description: "This is a great rark to relax and take a scenic walk at night."
+ }
+
+ const firstMarkerSymbol = {
+    type: "simple-marker",
+    color: [226, 119, 40],  // Orange
+    outline: {
+        color: [255, 255, 255], // White
+        width: 1
+    }
+ };
+
+ const secondMarkerSymbol = {
+    type: "simple-marker",
+    color: [119, 226, 40],  // ??
+    outline: {
+        color: [255, 255, 255], // White
+        width: 1
+    }
+ };
+
+ const thirdMarkerSymbol = {
+    type: "simple-marker",
+    text: "Third Stop",
+    color: [40, 226, 119],  // ??
+    outline: {
+        color: [255, 255, 255], // White
+        width: 1
+    }
+ };
+
+ const firstPointGraphic = new Graphic({
+    geometry: firstPoint,
+    symbol: firstMarkerSymbol,
+
+    attributes: firstAttributes,
+    popupTemplate: popupTemplate
+ });
+
+ const secondPointGraphic = new Graphic({
+    geometry: secondPoint,
+    symbol: secondMarkerSymbol,
+
+    attributes: secondAttributes,
+    popupTemplate: popupTemplate
+ });
+
+ const thirdPointGraphic = new Graphic({
+    geometry: thirdPoint,
+    symbol: thirdMarkerSymbol,
+
+    attributes: thirdAttributes,
+    popupTemplate: popupTemplate
+ });
+
+ graphicsLayer.add(firstPointGraphic);
+ graphicsLayer.add(secondPointGraphic);
+ graphicsLayer.add(thirdPointGraphic);
+
+ let legend = new Legend({
+  view: view
+});
+
+view.ui.add(legend, "bottom-right");
+});
+
+// This is the OpenAI Code
+
+// export default function Home() {
+//   const [storyInput, setStoryInput] = useState("");
+//   const [result, setResult] = useState();
+
+//   async function onSubmit(event) {
+//     event.preventDefault();
+//     try {
+//       const response = await fetch("/api/generate", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ idea: storyInput }),
+//       });
+
+//       const data = await response.json();
+//       if (response.status !== 200) {
+//         throw data.error || new Error(`Request failed with status ${response.status}`);
+//       }
+
+//       setResult(data.result);
+//       setStoryInput("");
+//     } catch(error) {
+//       // Consider implementing your own error handling logic here
+//       console.error(error);
+//       alert(error.message);
+//     }
+//   }
+
+//   return (
+//     <div>
+//       <Head>
+//         <title>OpenAI Quickstart</title>
+//         <link rel="icon" href="/dog.png" />
+//       </Head>
+
+//       <main className={styles.main}>
+//         <img src="/cute_chatbot.jpg" className={styles.icon} />
+//         <h3>Laura Thorne's - Book Publisher Chatbot Assistant</h3>
+//         <form onSubmit={onSubmit}>
+//           <input
+//             type="text"
+//             name="storyIdea"
+//             placeholder="Let me know your book idea"
+//             value={storyInput}
+//             onChange={(e) => setStoryInput(e.target.value)}
+//           />
+//           <input type="submit" value="Generate Story Titles" />
+//         </form>
+//         <div className={styles.result}>{result}</div>
+//       </main>
+//     </div>
+//   );
+// }
+
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="viewDiv"></div>
+
+    <!-- <div id="label">
+      <calcite-link id="tooltip-button">Data disclaimer</calcite-link>
+      <calcite-tooltip label="Data disclaimer" reference-element="tooltip-button">
+          <span>This data was collected over a 24 hour period</span>
+      </calcite-tooltip>
+  </div> -->
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>

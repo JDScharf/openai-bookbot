@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [storyInput, setStoryInput] = useState("");
+  const [dateInput, setDateInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,7 +14,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ idea: storyInput }),
+        body: JSON.stringify({ idea: dateInput }),
       });
 
       const data = await response.json();
@@ -23,7 +23,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setStoryInput("");
+      setDateInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -40,19 +40,19 @@ export default function Home() {
 
       <main className={styles.main}>
         <img src="/cute_chatbot.jpg" className={styles.icon} />
-        <h3>Laura Thorne's - Book Publisher Chatbot Assistant</h3>
+        <h3>Data Ventures - Date Idea Generator</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
-            name="storyIdea"
-            placeholder="Let me know your book idea"
-            value={storyInput}
-            onChange={(e) => setStoryInput(e.target.value)}
+            name="dateIdea"
+            placeholder="Let me know your date idea"
+            value={dateInput}
+            onChange={(e) => setDateInput(e.target.value)}
           />
-          <input type="submit" value="Generate Story Titles" />
+          <input type="submit" value="Generate Date Ideas" />
         </form>
         <div className={styles.result}>{result}</div>
       </main>
-    </div>
+    </div>    
   );
 }
