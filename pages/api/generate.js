@@ -14,6 +14,7 @@ export default async function (req, res) {
     });
     return;
   }
+  // else console.log(res)
 
   const idea = req.body.idea || '';
   if (idea.trim().length === 0) {
@@ -22,6 +23,7 @@ export default async function (req, res) {
         message: "Please enter a valid date idea",
       }
     });
+    // console.log(this.idea)
     return;
   }
 
@@ -33,6 +35,9 @@ export default async function (req, res) {
       max_tokens: 500,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
+    console.log("The submitted idea is: " + idea)
+    console.log("The returned text is: " + completion.data.choices[0].text)
+
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
@@ -45,6 +50,8 @@ export default async function (req, res) {
           message: 'An error occurred during your request.',
         }
       });
+      // console.log(data)
+      // return result;
     }
   }
 }
@@ -69,28 +76,10 @@ secondLat and secondLong are also both latitude and longitude for the secondAddr
 Here is a sample:
 
 user: {energyLevel = "high", distanceToTravel = 5, moneyCost="medium"}
-ideas: {firstStop = "CentralRock indoor climbing", firstAddress="600 N Franklin St, Syracuse, NY 13204", firstLong=-76.1586422026446, firstLat=43.05757533079649, secondStop="Freedom of Expresso Coffee", secondAddress= "115 Solar St Suite 101, Syracuse, NY 13204", secondLong=-76.15847630343886, secondLat=43.05666567606996, thirdStop="Franklin Square Park", thirdAddress="Solar & Plum Streets, Syracuse, NY", thirdLong=-76.15753200343886, thirdLat=43.05676327578289}
+ideas: {"firstStop" = "CentralRock indoor climbing", "firstAddress"="600 N Franklin St, Syracuse, NY 13204", "firstLong"=-76.1586422026446, "firstLat"=43.05757533079649, "secondStop"="Freedom of Espresso Coffee", "secondAddress"= "115 Solar St Suite 101, Syracuse, NY 13204", "secondLong"=-76.15847630343886, "secondLat"=43.05666567606996, "thirdStop"="Franklin Square Park", "thirdAddress"="Solar & Plum Streets, Syracuse, NY", "thirdLong"=-76.15753200343886, "thirdLat"=43.05676327578289}
 
-user {energyLevel = "medium", distanceToTravel = 2, moneyCost="high"}
-ideas:
-Here are some date ideas for your parameters:
-
-user: {energyLevel = "high", distanceToTravel = 5, moneyCost="medium"}
-ideas:
-{
-"firstStop": "CentralRock indoor climbing",
-"firstAddress": "600 N Franklin St, Syracuse, NY 13204",
-"firstLong": -76.1586422026446,
-"firstLat": 43.05757533079649,
-"secondStop": "Freedom of Espresso Coffee",
-"secondAddress": "115 Solar St Suite 101, Syracuse, NY 13204",
-"secondLong": -76.15847630343886,
-"secondLat": 43.05666567606996,
-"thirdStop": "Franklin Square Park",
-"thirdAddress": "Solar & Plum Streets, Syracuse, NY",
-"thirdLong": -76.15753200343886,
-"thirdLat": 43.05676327578289
-}
+user {energyLevel = "medium", distanceToTravel = 3, moneyCost="high"}
+ideas: {"firstStop" = "Biking at Onondaga Lake Park", "firstAddress"="106 Lake Dr, Liverpool, NY 13088", "firstLong"=-76.20498735396188, "firstLat"=43.09938333961237, "secondStop"="Ice Cream at Heid's", "secondAddress"= "305 Oswego St, Liverpool, NY 13088", "secondLong"=-76.20188567471097, "secondLat"=43.10124934885059, "thirdStop"="Stop at Tantrum City Rage Room", "thirdAddress"="109 E Taft Rd, North Syracuse, NY 13212", "thirdLong"=-76.14054918465398, "thirdLat"=43.12387021698499}
 
   idea: ${capitalizedDateIdea}
   Response:`;
