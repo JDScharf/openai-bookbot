@@ -14,7 +14,6 @@ export default async function (req, res) {
     });
     return;
   }
-  // else console.log(res)
 
   const idea = req.body.idea || '';
   if (idea.trim().length === 0) {
@@ -23,7 +22,7 @@ export default async function (req, res) {
         message: "Please enter a valid date idea",
       }
     });
-    // return;
+    return;
   }
 
   try {
@@ -35,7 +34,12 @@ export default async function (req, res) {
     });
     res.status(200).json({ result: completion.data.choices[0].text });
     console.log("The submitted idea is: " + idea)
-    console.log("The returned text is: " + completion.data.choices[0].text)
+    // console.log("The returned text is: " + completion.data.choices[0].text)
+    const gptText = completion.data.choices[0].text;
+    console.log("The first date idea is: " + gptText)
+    const gptJSON = JSON.parse(gptText)
+    console.log("The Chat GPT response as a JSON is: " + gptJSON)
+    console.log("The first outing is: " + gptJSON.firstStop)
 
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
@@ -57,7 +61,7 @@ export default async function (req, res) {
 
 function generatePrompt(idea) {
   const capitalizedDateIdea =
-    // idea[0].toUpperCase() + idea.slice(1).toLowerCase();
+  
   idea[0].toUpperCase();
   return `I want you to act as a date idea generator API for acticities in Syracuse, NY.  I will pass in three parameters:  energyLevel, distanceToTravel, and moneyCost.  
 
