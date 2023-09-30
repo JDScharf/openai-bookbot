@@ -23,8 +23,7 @@ export default async function (req, res) {
         message: "Please enter a valid date idea",
       }
     });
-    // console.log(this.idea)
-    return;
+    // return;
   }
 
   try {
